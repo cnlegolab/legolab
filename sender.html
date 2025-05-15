@@ -28,8 +28,12 @@
     <script>
         function generatePassword() {
             const password = Math.floor(1000 + Math.random() * 9000); 
-            localStorage.setItem("deliveryPassword", password);
             document.getElementById("password").innerText = "생성된 암호: " + password;
+            const link = `receiver.html?password=${password}`;
+            document.getElementById("password").innerHTML = `
+                생성된 암호: ${password} <br>
+                <a href="${link}" target="_blank">암호 입력 페이지로 이동</a>
+            `;
         }
     </script>
 </body>

@@ -33,11 +33,13 @@
     <script>
         function checkPassword() {
             const inputPassword = document.getElementById("inputPassword").value;
-            const storedPassword = localStorage.getItem("deliveryPassword");
-            if (inputPassword === storedPassword) {
-                document.getElementById("message").innerText = "안전한 음식이 배송되었습니다!";
+            const urlParams = new URLSearchParams(window.location.search);
+            const correctPassword = urlParams.get("password");
+
+            if (inputPassword === correctPassword) {
+                document.getElementById("message").innerText = "✅ 안전한 음식이 배송되었습니다!";
             } else {
-                document.getElementById("message").innerText = "암호가 틀렸습니다. 다시 확인하세요.";
+                document.getElementById("message").innerText = "❌ 암호가 틀렸습니다. 다시 확인하세요.";
             }
         }
     </script>
