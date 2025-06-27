@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>레고에듀케이션 STEAM영재교육센터 연구활동 보고서</title>
+  <meta name="viewport" content="width=1200">
+  <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@400;600;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f6f7fb; margin: 0; padding: 0;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      color: #253052; min-height: 100vh; letter-spacing: 0.02em;
+    }
+    .main-container {
+      max-width: 1200px; min-width: 760px;
+      margin: 64px auto 80px auto; background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 6px 38px 0 rgba(60,85,200,.14);
+      padding: 54px 74px 44px 74px; position: relative;
+    }
+    .header-flex {
+      display: flex; align-items: flex-start; margin-bottom: 14px;
+    }
+    .logo-col {
+      display: flex; flex-direction: row; gap: 17px; align-items: flex-start;
+      margin-right: 22px;
+    }
+    .logo-steam { max-width: 150px; min-width:90px; height: auto; display: block; }
+    .logo-lego  { max-width: 110px; height: 30px; margin-top: 14px; display: block; }
+    h1 {
+      margin: 0 0 10px 0; padding: 0;
+      font-size: 2.17rem; font-weight: 900;
+      color: #3856d1; letter-spacing:0.02em;
+    }
+    .toolbar { position: absolute; top: 18px; right: 34px; z-index: 19; display: flex; gap: 10px; }
+    .ai-btn {
+      font-family: inherit; font-weight: 700; border: none;
+      border-radius: 20px; background: #fff; padding: 7px 19px;
+      font-size: 15px; color: #5d6af0;
+      box-shadow: 0 1px 4px rgba(60,80,150,.11);
+      border: 2px solid #e1e4f6; cursor: pointer; text-decoration: none; outline: none;
+      transition: all 0.14s;
+    }
+    .ai-btn:hover { background: #e7eafd; border-color:#b5bdfc; color:#253052;}
+    .ai-btn.chatgpt { color:#19c37d; border-color:#19c37d;}
+    .ai-btn.chatgpt:hover { background: #e9fff4; color:#088652;}
+    .ai-btn.claude { color:#ffa400; border-color:#ffa400;}
+    .ai-btn.claude:hover { background: #fffbe9; color:#b97d00;}
+    .ai-btn.perplexity { color:#5470ff; border-color:#5470ff;}
+    .ai-btn.perplexity:hover { background: #f0f4ff; color:#232d61;}
+    .ai-btn.wrtn { color:#775cf2; border-color:#775cf2;}
+    .ai-btn.wrtn:hover { background: #edeaff; color:#3c2973;}
+    .ai-btn.napkin { color:#ff6f61; border-color:#ff6f61;}
+    .ai-btn.napkin:hover { background: #ffeceb; color:#bd2e0e;}
+    .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 38px; background: #f3f4fb; border-radius: 10px; overflow: hidden;}
+    .meta-table th, .meta-table td {
+      padding: 16px 22px; border-bottom: 1.5px solid #ebedf4;
+      text-align: left; font-size: 18px;
+    }
+    .meta-table th { background: #eaf0fe; width: 180px; font-weight: 700; color: #30418b; border-bottom: 1.5px solid #dbe5ff; letter-spacing: 0.04em;}
+    .meta-table td { background: #fcfcff;}
+    .wide-input { width: 100%; font-size: 21px; padding: 15px 15px; border-radius: 8px; border: 1.5px solid #dde0ee; margin-bottom: 2px; margin-top: 3px; box-sizing: border-box; background: #fff; font-family:'SUIT','Roboto','맑은 고딕',sans-serif;}
+    .curriculum-select {
+      font-size: 18px; padding:8px 18px; border-radius: 6px; border:1.5px solid #dde0ee; margin-left:0; margin-top:3px; background:#f8fafd;
+    }
+    .sensor-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px 24px; margin-top: 3px; width:100%;}
+    .sensor-item { display: flex; align-items: center; background: #eef0fa; border-radius: 7px; padding: 6px 10px 6px 8px; font-size: 17px; border: 1.5px solid #dde0ee; min-width: 0; gap:7px;}
+    .sensor-item label { margin: 0 4px 0 2px; font-weight: 600; }
+    .sensor-qty { margin-left: 2px; display:none;}
+    .sensor-item input[type=checkbox]:checked ~ .sensor-qty { display:inline-block; }
+    .section-title { font-weight: 900; font-size: 1.23rem; color: #5d6af0; margin: 44px 0 13px 0; padding-left: 0px; display:flex;align-items:center;gap:12px; border: none; background: none; letter-spacing: 0.5px;}
+    .section-title .icon { font-size: 1.85em; margin-right:2px;}
+    .desc-box, textarea { background: #f8fafd; border-radius: 9px; padding: 21px 19px 20px 20px; margin-bottom: 17px; min-height: 100px; line-height: 1.75; font-size: 19px; box-shadow: 0 0 0 1.5px #f0f2f7; font-family:'SUIT','Roboto',sans-serif; width: 100%; box-sizing: border-box;}
+    textarea { min-height: 160px; font-size: 19px; border: none; outline: none; margin-bottom: 0; transition: box-shadow .12s; margin-top:3px;}
+    textarea:focus { box-shadow: 0 0 0 2.2px #7b66ff; }
+    .speech-row { display: flex; align-items:center; gap:8px; margin-bottom:7px;}
+    .speech-row button { padding:8px 19px;font-size:16px;font-weight:700; background: #eaf0fe; color:#5d6af0; border-radius: 19px; border:none; cursor:pointer;box-shadow: 0 1px 4px rgba(44,62,80,0.08); transition:.13s; outline:none;}
+    .speech-row button:hover { background:#5d6af0; color:#fff;}
+    .speech-guide { font-size:15px;color:#9ba6bb;}
+    .photo-btn-row {display:flex;align-items:center;gap:10px;margin-top:14px;}
+    .photo-btn { display: inline-flex; align-items: center; justify-content: center; gap:7px; font-size:18px; padding: 11px 26px; border-radius: 24px; background: linear-gradient(90deg,#6e93f7 60%,#4ac6ff 100%); color: #fff; border: none; font-weight: 800; box-shadow: 0 1px 7px 0 rgba(80,120,255,.11); transition:.13s; cursor:pointer;}
+    .photo-btn:hover { background: linear-gradient(90deg,#4974d9 55%,#14cfff 100%);}
+    .photo-btn:active { background: #4974d9; }
+    .attach-file-btn { display:inline-flex; align-items:center; gap:6px; font-size:17px; font-weight:700; background:#eaf0fe; color:#5275ee; border-radius:18px; padding:9px 22px; border:none; cursor:pointer; transition:.13s; margin-left:7px;}
+    .attach-file-btn:hover { background:#d5e6fc; color:#223385;}
+    input[type="file"] {display:none;}
+    .snapshot-info { text-align: center; font-size: 16px; color: #5361aa; margin-bottom: 2px; margin-top: 5px;}
+    .snapshot-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin: 14px 0 8px 0; min-height: 1em; width: 100%;}
+    .snapshot-container img { width: 160px; border-radius: 11px; border: 2px solid #d8daf8; box-shadow: 1px 3px 8px 0 rgba(44,62,80,0.10); background: #fff; margin-bottom: 6px; object-fit: cover;}
+    .camera-modal, .speech-modal { display:none; position:fixed; top:0;left:0;width:100vw;height:100vh; background:rgba(45,60,110,0.20);z-index:2000; align-items:center;justify-content:center;}
+    .camera-modal.active, .speech-modal.active { display:flex; }
+    .camera-modal-content, .speech-modal-content { background:#fff; border-radius:22px; box-shadow:0 10px 48px rgba(40,50,90,0.17); padding:44px 36px 36px 36px; display:flex;flex-direction:column;align-items:center; position:relative; min-width:400px; min-height:340px; max-width:98vw;}
+    .camera-modal-close, .speech-modal-close { position:absolute; top:18px; right:24px; background:none; border:none; font-size:1.8em; color:#888; cursor:pointer;}
+    .camera-modal video { border-radius:12px; border:2.5px solid #8da8ff; margin-bottom:18px; background:#111; width:380px;max-width:80vw;max-height:44vh;}
+    .camera-modal .modal-btn-row { width:100%; display:flex; justify-content:center; margin-top:0; }
+    .camera-modal .photo-btn { min-width:150px; }
+    .speech-anim { margin: 38px 0 18px 0; width:70px; height:70px; border-radius:50%; background:#eaf0fe; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 8px #dbe9fd; animation: pulse 1.2s infinite;}
+    @keyframes pulse { 0% { box-shadow:0 0 0 8px #dbe9fd;} 70% { box-shadow:0 0 0 18px #c9e2ff;} 100% { box-shadow:0 0 0 8px #dbe9fd;} }
+    .speech-anim-icon { font-size:2.7em; color:#5275ee;}
+    .speech-status { font-size:19px; margin-bottom:12px; color:#3856d1;}
+    .speech-cancel-btn { margin-top:14px; padding:11px 36px; border-radius:19px; background:#f0f0f8; color:#2856cc; font-size:17px; border:none; font-weight:700; cursor:pointer; transition:.13s;}
+    .speech-cancel-btn:hover { background:#e4eaff;}
+    button.main-save-btn { padding: 14px 40px; background: #5d6af0; color: #fff; border: none; border-radius: 7px; font-size: 1.18rem; font-weight: 900; margin-top: 38px; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 2px 8px rgba(44,62,80,0.13); transition: background .14s; display: block; margin-left:auto; margin-right:auto;}
+    button.main-save-btn:active { background: #3856d1; }
+    button:disabled { background: #dadada; color: #888; }
+    .copyright-footer {
+      margin-top:52px; text-align:center; font-size:16.5px; color:#9a9ca5; padding-top:16px; border-top:1.4px solid #e3e6ef;
+      letter-spacing:0.04em; font-family:'SUIT','Roboto','맑은 고딕',sans-serif;
+    }
+    @media (max-width: 1024px) {
+      .main-container {padding:32px 3vw;}
+      .toolbar { right: 3vw;}
+      .meta-table th {width:110px;}
+      .sensor-grid {grid-template-columns:1fr 1fr;}
+      .header-flex {flex-direction:column;gap:2px;}
+      .logo-col {margin-bottom:10px;}
+      .logo-steam {max-width: 38vw;}
+    }
+    @media print {
+      body { background: #fff; }
+      .main-container { box-shadow: none; margin:0; padding:0;}
+      button, .toolbar { display:none !important;}
+      .desc-box { background: #f7f8fd !important; -webkit-print-color-adjust:exact; }
+      .section-title { background: #e7eafd !important; -webkit-print-color-adjust:exact;}
+      textarea, .photo-btn-row { display:none !important;}
+      .copyright-footer {color:#606066;}
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container" id="editForm">
+    <div class="toolbar">
+      <a href="https://chatgpt.com/" target="_blank" class="ai-btn chatgpt">ChatGPT</a>
+      <a href="https://claude.ai/" target="_blank" class="ai-btn claude">Claude</a>
+      <a href="https://www.perplexity.ai/" target="_blank" class="ai-btn perplexity">Perplexity</a>
+      <a href="https://wrtn.ai/" target="_blank" class="ai-btn wrtn">Wrtn</a>
+      <a href="https://www.napkin.ai/" target="_blank" class="ai-btn napkin">Napkin</a>
+    </div>
+    <div class="header-flex">
+      <div class="logo-col">
+        <img src="steam.png" alt="STEAM 센터 로고" class="logo-steam">
+        <img src="lego.png" alt="LEGO Education" class="logo-lego">
+      </div>
+      <div>
+        <h1>STEAM 영재교육센터<br>레고에듀케이션 연구활동 보고서</h1>
+      </div>
+    </div>
+    <table class="meta-table">
+      <tr>
+        <th>연구 제목</th>
+        <td><input type="text" id="title" class="wide-input" placeholder="예: 스마트 쓰레기 분리수거 로봇"></td>
+      </tr>
+      <tr>
+        <th>작성자</th>
+        <td><input type="text" id="author" class="wide-input" placeholder="이름 입력"></td>
+      </tr>
+      <tr>
+        <th>교육과정</th>
+        <td>
+          <select id="curriculum" class="curriculum-select">
+            <option value="">-- 선택하세요 --</option>
+            <option value="STEAM-L1 SPIKE Essential">STEAM-L1 SPIKE Essential</option>
+            <option value="STEAM-L2 SPIKE Prime">STEAM-L2 SPIKE Prime</option>
+            <option value="STEAM-L3 EV3 Mindstorm">STEAM-L3 EV3 Mindstorm</option>
+            <option value="STEAM Cless">STEAM Cless</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>작성일</th>
+        <td>
+          <input type="date" id="writeDate" class="wide-input" style="max-width:260px;">
+        </td>
+      </tr>
+      <tr>
+        <th>사용 센서</th>
+        <td>
+          <div class="sensor-grid">
+            <div class="sensor-item"><input type="checkbox" id="hub" onchange="showQty('hubQty',this)"><label for="hub">스마트 허브 (Smart Hub)</label><select class="sensor-qty" id="hubQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="largeMotor" onchange="showQty('largeMotorQty',this)"><label for="largeMotor">라지 모터 (Large Motor)</label><select class="sensor-qty" id="largeMotorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="mediumMotor" onchange="showQty('mediumMotorQty',this)"><label for="mediumMotor">미디엄 모터 (Medium Motor)</label><select class="sensor-qty" id="mediumMotorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="distanceSensor" onchange="showQty('distanceSensorQty',this)"><label for="distanceSensor">거리 센서 (Distance Sensor)</label><select class="sensor-qty" id="distanceSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="colorSensor" onchange="showQty('colorSensorQty',this)"><label for="colorSensor">컬러 센서 (Color Sensor)</label><select class="sensor-qty" id="colorSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="forceSensor" onchange="showQty('forceSensorQty',this)"><label for="forceSensor">힘 센서 (Force Sensor)</label><select class="sensor-qty" id="forceSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="section-title"><span class="icon">🔍</span>Connect (연결)</div>
+    <div class="speech-row">
+      <button type="button" onclick="openSpeechModal('connect')">🎤 음성 입력</button>
+      <span class="speech-guide">문제 상황, 주제 선정 이유 등을 자세히</span>
+    </div>
+    <textarea id="connect" placeholder="예시: 학교에서 학생들이 자주 쓰레기를 버리지 않는 문제를 보고 ..."></textarea>
+
+    <div class="section-title"><span class="icon">⚙️</span>Construct (구성 및 제작)</div>
+    <div class="speech-row">
+      <button type="button" onclick="openSpeechModal('construct')">🎤 음성 입력</button>
+      <span class="speech-guide">설계, 제작, 프로그래밍, 센서 사용 등</span>
+    </div>
+    <textarea id="construct" placeholder="예시: SPIKE Prime과 컬러 센서를 사용하여 ..."></textarea>
+    <div class="photo-btn-row">
+      <button class="photo-btn" type="button" onclick="openCameraModal()">📸 사진 촬영</button>
+      <button class="attach-file-btn" onclick="document.getElementById('fileInput').click()" type="button">📎 이미지 첨부</button>
+      <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFileUpload(this)">
+    </div>
+    <div class="snapshot-info">최대 5장까지만 촬영/첨부 가능합니다.</div>
+    <div class="snapshot-container" id="snapshotContainer"></div>
+    <!-- 카메라 모달 팝업 -->
+    <div class="camera-modal" id="cameraModal">
+      <div class="camera-modal-content">
+        <button class="camera-modal-close" onclick="closeCameraModal()" title="닫기">&times;</button>
+        <video id="video" autoplay></video>
+        <div class="modal-btn-row">
+          <button class="photo-btn" id="captureBtn" onclick="captureImage()" type="button">이미지 저장</button>
+        </div>
+      </div>
+    </div>
+    <!-- 음성 인식 모달 -->
+    <div class="speech-modal" id="speechModal">
+      <div class="speech-modal-content">
+        <button class="speech-modal-close" onclick="cancelSpeech()" title="취소">&times;</button>
+        <div class="speech-anim"><span class="speech-anim-icon">▶️</span></div>
+        <div class="speech-status" id="speechStatus">음성 인식 중... <span style="font-size:1.1em;">▶</span></div>
+        <div style="font-size:16px;color:#7a7f97;margin-bottom:12px;">말씀이 끝나면 자동 입력됩니다.</div>
+        <button class="speech-cancel-btn" onclick="cancelSpeech()" type="button">음성입력 중지</button>
+      </div>
+    </div>
+    <div class="section-title"><span class="icon">💡</span>Contemplate (성찰)</div>
+    <div class="speech-row">
+      <button type="button" onclick="openSpeechModal('contemplate')">🎤 음성 입력</button>
+      <span class="speech-guide">느낀 점, 어려웠던 점, 개선하고 싶은 점</span>
+    </div>
+    <textarea id="contemplate" placeholder="예시: 쓰레기통이 자동으로 뚜껑이 열려서 편리했고 ..."></textarea>
+
+    <div class="section-title"><span class="icon">🚀</span>Continue (확장)</div>
+    <div class="speech-row">
+      <button type="button" onclick="openSpeechModal('continue')">🎤 음성 입력</button>
+      <span class="speech-guide">다음 발전 방향, 추가 탐구 주제</span>
+    </div>
+    <textarea id="continue" placeholder="예시: 태양광 패널을 달아서 친환경적으로 개선해 보고 싶다 ..."></textarea>
+    <button class="main-save-btn" onclick="generateReport()">💾 보고서 저장하기</button>
+    <div class="copyright-footer">
+      이 프로그램의 제작자는 <b>STEAM 영재교육센터</b>입니다.<br>
+      모든 콘텐츠와 데이터는 STEAM 영재교육센터에 저작권이 있으며, 무단 복제 및 배포를 금합니다.<br>
+      문의: <b>cnlegolab@gmail.com</b>
+    </div>
+  </div>
+  <!-- 카메라/음성인식 JS 및 저장 기능 -->
+  <script>
+    function showQty(qtyId, cb){ document.getElementById(qtyId).style.display = cb.checked ? 'inline-block' : 'none'; }
+    // 사진촬영/첨부 관련
+    let maxSnapshots = 5, snapshotData = [], cameraStream = null;
+    function openCameraModal() {
+      if(snapshotData.length >= maxSnapshots) { alert("최대 5장까지만 저장할 수 있습니다."); return; }
+      document.getElementById('cameraModal').classList.add('active');
+      const video = document.getElementById('video');
+      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        cameraStream = stream;
+        video.srcObject = stream;
+        video.style.display = 'block';
+      });
+    }
+    function closeCameraModal() {
+      document.getElementById('cameraModal').classList.remove('active');
+      const video = document.getElementById('video');
+      if(cameraStream){
+        cameraStream.getTracks().forEach(t=>t.stop());
+        video.srcObject = null; cameraStream = null;
+      }
+    }
+    function captureImage() {
+      const video = document.getElementById('video');
+      if (snapshotData.length >= maxSnapshots) {
+        alert("최대 5장까지만 저장할 수 있습니다."); closeCameraModal(); return;
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      const dataURL = canvas.toDataURL('image/png');
+      snapshotData.push(dataURL);
+      updateSnapshots();
+      closeCameraModal();
+    }
+    function handleFileUpload(input) {
+      let files = Array.from(input.files);
+      let leftCount = maxSnapshots - snapshotData.length;
+      if (files.length > leftCount) files = files.slice(0, leftCount);
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          snapshotData.push(e.target.result);
+          updateSnapshots();
+        }
+        reader.readAsDataURL(file);
+      });
+      input.value = "";
+    }
+    function updateSnapshots() {
+      const container = document.getElementById('snapshotContainer');
+      container.innerHTML = '';
+      snapshotData.forEach(d => {
+        const img = document.createElement('img'); img.src = d; container.appendChild(img);
+      });
+    }
+    // 음성인식
+    let speechRecognition, speechTarget, speechModalOpen = false;
+    function openSpeechModal(targetId) {
+      const modal = document.getElementById('speechModal');
+      modal.classList.add('active');
+      speechTarget = document.getElementById(targetId);
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        document.getElementById('speechStatus').innerText = "이 브라우저는 음성인식이 지원되지 않습니다."; return;
+      }
+      speechModalOpen = true;
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      speechRecognition = new SpeechRecognition();
+      speechRecognition.lang = 'ko-KR';
+      speechRecognition.interimResults = false;
+      speechRecognition.start();
+      speechRecognition.onresult = function(event) {
+        let result = event.results[0][0].transcript;
+        speechTarget.value += result; closeSpeechModal();
+      }
+      speechRecognition.onend = function() { if(speechModalOpen) closeSpeechModal(); }
+      speechRecognition.onerror = function() { if(speechModalOpen) closeSpeechModal(); }
+    }
+    function closeSpeechModal() {
+      document.getElementById('speechModal').classList.remove('active');
+      if (speechRecognition) speechRecognition.stop(); speechModalOpen = false;
+    }
+    function cancelSpeech() { closeSpeechModal(); }
+    // 보고서 저장
+    function generateReport() {
+      const author = document.getElementById('author').value.trim();
+      const title = document.getElementById('title').value.trim();
+      if (!author || !title) { alert("작성자와 연구 제목을 모두 입력해 주세요."); return; }
+      let writeDate = document.getElementById('writeDate').value;
+      let curriculum = document.getElementById('curriculum').value || '없음';
+      let sensors = [];
+      [
+        ['hub', 'hubQty', '스마트 허브 (Smart Hub)'],
+        ['largeMotor', 'largeMotorQty', '라지 모터 (Large Motor)'],
+        ['mediumMotor', 'mediumMotorQty', '미디엄 모터 (Medium Motor)'],
+        ['distanceSensor', 'distanceSensorQty', '거리 센서 (Distance Sensor)'],
+        ['colorSensor', 'colorSensorQty', '컬러 센서 (Color Sensor)'],
+        ['forceSensor', 'forceSensorQty', '힘 센서 (Force Sensor)']
+      ].forEach(([id, qtyId, label]) => {
+        if (document.getElementById(id).checked) {
+          const q = document.getElementById(qtyId).value;
+          sensors.push(label + ' × ' + q);
+        }
+      });
+      const connect = document.getElementById('connect').value;
+      const construct = document.getElementById('construct').value;
+      const contemplate = document.getElementById('contemplate').value;
+      const continueTxt = document.getElementById('continue').value;
+      let imagesHTML = '';
+      if (snapshotData.length > 0) {
+        imagesHTML = '<div class="snapshot-info" style="margin-bottom:0;font-size:16px;color:#5361aa;text-align:center;">촬영/첨부 이미지 (최대 5장)</div>';
+        imagesHTML += '<div class="snapshot-container" style="justify-content:center;">';
+        for (let d of snapshotData) imagesHTML += `<img src='${d}'>`;
+        imagesHTML += '</div>';
+      }
+      let reportHTML = `
+      <div class="logo-wrap" style="margin-bottom:32px;justify-content:center;display:flex;align-items:flex-start;">
+        <img src="steam.png" alt="STEAM 센터 로고" class="logo-steam" style="max-width:150px;margin-right:18px;">
+        <img src="lego.png" alt="LEGO Education" class="logo-lego" style="max-width:110px;height:30px;margin-top:14px;">
+      </div>
+      <h1>STEAM 영재교육센터<br>레고에듀케이션 연구활동 보고서</h1>
+      <table class='meta-table'>
+        <tr><th>연구 제목</th><td>${title}</td></tr>
+        <tr><th>작성자</th><td>${author}</td></tr>
+        <tr><th>교육과정</th><td>${curriculum}</td></tr>
+        <tr><th>작성일</th><td>${writeDate}</td></tr>
+        <tr><th>사용 센서</th><td>${sensors.length ? sensors.join(', ') : '없음'}</td></tr>
+      </table>
+      <div class='section-title'><span class="icon">🔍</span>Connect (연결)</div>
+      <div class='desc-box'>${connect.replace(/\n/g, '<br>')}</div>
+      <div class='section-title'><span class="icon">⚙️</span>Construct (구성 및 제작)</div>
+      <div class='desc-box'>${construct.replace(/\n/g, '<br>')}</div>
+      ${imagesHTML}
+      <div class='section-title'><span class="icon">💡</span>Contemplate (성찰)</div>
+      <div class='desc-box'>${contemplate.replace(/\n/g, '<br>')}</div>
+      <div class='section-title'><span class="icon">🚀</span>Continue (확장)</div>
+      <div class='desc-box'>${continueTxt.replace(/\n/g, '<br>')}</div>
+      <div class="copyright-footer" style="margin-top:52px;">
+        이 프로그램의 제작자는 <b>STEAM 영재교육센터</b>입니다.<br>
+        모든 콘텐츠와 데이터는 STEAM 영재교육센터에 저작권이 있으며, 무단 복제 및 배포를 금합니다.<br>
+        문의: <b>cnlegolab@gmail.com</b>
+      </div>
+      `;
+      const blob = new Blob([
+        '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>보고서</title><meta name="viewport" content="width=1200">',
+        document.head.innerHTML,
+        '</head><body style="margin:0;background:#fff;"><div style="max-width:880px;margin:48px auto;">',
+        reportHTML,
+        '</div></body></html>'
+      ], {type: 'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `${author}_${title.replace(/\s+/g,'_')}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      // document.getElementById('editForm').style.display = 'none'; // <-- 요 한 줄만 주석 처리!
+    }
+  </script>
+</body>
+</html>
