@@ -15,22 +15,8 @@
       max-width: 1200px; min-width: 760px;
       margin: 64px auto 80px auto; background: #fff;
       border-radius: 22px;
-      box-shadow: 0 6px 38px 0 rgba(60,85,200,.14);
+      box-shadow: 0 20px 38px 0 rgba(60,85,200,.14);
       padding: 54px 74px 44px 74px; position: relative;
-    }
-    .header-flex {
-      display: flex; align-items: flex-start; margin-bottom: 14px;
-    }
-    .logo-col {
-      display: flex; flex-direction: row; gap: 17px; align-items: flex-start;
-      margin-right: 22px;
-    }
-    .logo-steam { max-width: 150px; min-width:90px; height: auto; display: block; }
-    .logo-lego  { max-width: 110px; height: 30px; margin-top: 14px; display: block; }
-    h1 {
-      margin: 0 0 10px 0; padding: 0;
-      font-size: 2.17rem; font-weight: 900;
-      color: #3856d1; letter-spacing:0.02em;
     }
     .toolbar { position: absolute; top: 18px; right: 34px; z-index: 19; display: flex; gap: 10px; }
     .ai-btn {
@@ -52,6 +38,39 @@
     .ai-btn.wrtn:hover { background: #edeaff; color:#3c2973;}
     .ai-btn.napkin { color:#ff6f61; border-color:#ff6f61;}
     .ai-btn.napkin:hover { background: #ffeceb; color:#bd2e0e;}
+    .header-visual-wrap {
+      width: 100%; position: relative; margin-bottom: 0;
+    }
+    .logo-imgs {
+      position: absolute; top: 0; left: 0;
+      display: flex; flex-direction: row; gap: 16px; align-items: flex-start;
+    }
+    .logo-steam { max-width: 150px; min-width:90px; height: auto; display: block; }
+    .logo-lego  { max-width: 130px; height: 36px; margin-top: 16px; display: block; }
+    .title-center {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 110px;
+    }
+    .title-center h1 {
+      margin: 82px 0 15px 0;
+      padding: 0;
+      font-size: 2.18rem;
+      font-weight: 900;
+      color: #3856d1;
+      letter-spacing:0.02em;
+      text-align: center;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+    @media (max-width: 900px) {
+      .title-center h1 { font-size: 1.43rem; }
+      .logo-steam { max-width: 100px; }
+      .logo-lego { max-width: 70px; }
+    }
     .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 38px; background: #f3f4fb; border-radius: 10px; overflow: hidden;}
     .meta-table th, .meta-table td {
       padding: 16px 22px; border-bottom: 1.5px solid #ebedf4;
@@ -59,10 +78,82 @@
     }
     .meta-table th { background: #eaf0fe; width: 180px; font-weight: 700; color: #30418b; border-bottom: 1.5px solid #dbe5ff; letter-spacing: 0.04em;}
     .meta-table td { background: #fcfcff;}
-    .wide-input { width: 100%; font-size: 21px; padding: 15px 15px; border-radius: 8px; border: 1.5px solid #dde0ee; margin-bottom: 2px; margin-top: 3px; box-sizing: border-box; background: #fff; font-family:'SUIT','Roboto','맑은 고딕',sans-serif;}
-    .curriculum-select {
-      font-size: 18px; padding:8px 18px; border-radius: 6px; border:1.5px solid #dde0ee; margin-left:0; margin-top:3px; background:#f8fafd;
+    .title-input {
+      width: 520px !important; max-width: 520px !important; min-width: 520px !important;
+      font-size: 21px; padding: 7px 13px !important;
+      border-radius: 8px; border: 1.5px solid #dde0ee; margin-bottom: 2px; margin-top: 3px;
+      box-sizing: border-box; background: #fff; font-family:'SUIT','Roboto','맑은 고딕',sans-serif; display: inline-block;
+      line-height: 1.2; height: 38px !important; min-height: 38px !important;
     }
+    .wide-input,
+    .meta-table input[type="date"],
+    .meta-table select.curriculum-select {
+      width: 360px !important; max-width: 360px !important; min-width: 360px !important;
+      font-size: 16px; padding: 7px 13px !important;
+      border-radius: 8px; border: 1.5px solid #dde0ee; margin-bottom: 2px; margin-top: 3px;
+      box-sizing: border-box; background: #fff; font-family:'SUIT','Roboto','맑은 고딕',sans-serif; display: inline-block;
+      line-height: 1.2; height: 38px !important; min-height: 38px !important;
+    }
+    /* placeholder 스타일 - 연구제목 입력창과 통일 */
+    input::placeholder,
+    textarea::placeholder {
+      font-size: 16px !important;
+      color: #b5b9c9 !important;
+      opacity: 1;
+      font-weight: 1200 !important;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      line-height: 1.2;
+    }
+    /* date 가짜 placeholder도 동일하게! */
+    .date-placeholder {
+      position: absolute; top: 7px; left: 14px;
+      color: #b5b9c9 !important;
+      font-size: 16px !important;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      font-weight: 400 !important;
+      line-height: 1.2;
+      opacity: 1; pointer-events: none; transition: opacity 0.1s; z-index: 1;
+    }
+    .date-placeholder-wrap input[type="date"]:focus + .date-placeholder,
+    .date-placeholder-wrap input[type="date"]:not(:placeholder-shown) + .date-placeholder,
+    .date-placeholder-wrap input[type="date"]:not([value=""]) + .date-placeholder {
+      opacity: 0;
+    }
+    /* 드롭다운의 -- 선택하세요 -- 등 placeholder 스타일 */
+    .curriculum-select option[disabled] {
+      color: #b5b9c9 !important;
+      font-size: 16px !important;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      font-weight: 400 !important;
+    }
+    .curriculum-select,
+    .curriculum-select option {
+      color: #253052;
+      font-size: 16px;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      font-weight: 400;
+    }
+    .curriculum-select option[disabled][selected] {
+      color: #b5b9c9 !important;
+      font-size: 16px !important;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      font-weight: 400 !important;
+    }
+    .curriculum-select:focus option,
+    .curriculum-select option {
+      color: #253052;
+      font-size: 16px;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      font-weight: 400;
+    }
+    /* 드롭다운 펼쳤을 때 --선택하세요--도 placeholder와 똑같이 */
+    .curriculum-select:focus option[disabled] {
+      color: #b5b9c9 !important;
+      font-size: 16px !important;
+      font-family: 'SUIT','Roboto','맑은 고딕',sans-serif;
+      font-weight: 400 !important;
+    }
+    /* 이하 기존 스타일(생략) ... */
     .sensor-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px 24px; margin-top: 3px; width:100%;}
     .sensor-item { display: flex; align-items: center; background: #eef0fa; border-radius: 7px; padding: 6px 10px 6px 8px; font-size: 17px; border: 1.5px solid #dde0ee; min-width: 0; gap:7px;}
     .sensor-item label { margin: 0 4px 0 2px; font-weight: 600; }
@@ -112,9 +203,10 @@
       .toolbar { right: 3vw;}
       .meta-table th {width:110px;}
       .sensor-grid {grid-template-columns:1fr 1fr;}
-      .header-flex {flex-direction:column;gap:2px;}
-      .logo-col {margin-bottom:10px;}
-      .logo-steam {max-width: 38vw;}
+      .header-visual-wrap {min-height:180px;}
+      .logo-steam {max-width: 70px;}
+      .logo-lego {max-width: 44px;}
+      .title-center h1 {font-size: 1rem;}
     }
     @media print {
       body { background: #fff; }
@@ -136,29 +228,36 @@
       <a href="https://wrtn.ai/" target="_blank" class="ai-btn wrtn">Wrtn</a>
       <a href="https://www.napkin.ai/" target="_blank" class="ai-btn napkin">Napkin</a>
     </div>
-    <div class="header-flex">
-      <div class="logo-col">
+    <div class="header-visual-wrap">
+      <div class="logo-imgs">
         <img src="steam.png" alt="STEAM 센터 로고" class="logo-steam">
         <img src="lego.png" alt="LEGO Education" class="logo-lego">
       </div>
-      <div>
-        <h1>STEAM 영재교육센터<br>레고에듀케이션 연구활동 보고서</h1>
+      <div class="title-center">
+        <h1>
+          STEAM 영재교육센터<br>
+          레고에듀케이션 연구활동 보고서
+        </h1>
       </div>
     </div>
     <table class="meta-table">
       <tr>
         <th>연구 제목</th>
-        <td><input type="text" id="title" class="wide-input" placeholder="예: 스마트 쓰레기 분리수거 로봇"></td>
+        <td>
+          <input type="text" id="title" class="title-input" placeholder="예: 스마트 쓰레기 분리수거 로봇">
+        </td>
       </tr>
       <tr>
         <th>작성자</th>
-        <td><input type="text" id="author" class="wide-input" placeholder="이름 입력"></td>
+        <td>
+          <input type="text" id="author" class="wide-input" placeholder="이름 입력">
+        </td>
       </tr>
       <tr>
         <th>교육과정</th>
         <td>
-          <select id="curriculum" class="curriculum-select">
-            <option value="">-- 선택하세요 --</option>
+          <select id="curriculum" class="curriculum-select wide-input" required>
+            <option value="" disabled selected>-- 선택하세요 --</option>
             <option value="STEAM-L1 SPIKE Essential">STEAM-L1 SPIKE Essential</option>
             <option value="STEAM-L2 SPIKE Prime">STEAM-L2 SPIKE Prime</option>
             <option value="STEAM-L3 EV3 Mindstorm">STEAM-L3 EV3 Mindstorm</option>
@@ -169,31 +268,36 @@
       <tr>
         <th>작성일</th>
         <td>
-          <input type="date" id="writeDate" class="wide-input" style="max-width:260px;">
+          <div class="date-placeholder-wrap" style="position:relative;">
+            <input type="date" id="writeDate" class="wide-input" autocomplete="off" style="background:transparent; position:relative; z-index:2;">
+            <span class="date-placeholder">연-월-일</span>
+          </div>
         </td>
       </tr>
       <tr>
         <th>사용 센서</th>
         <td>
           <div class="sensor-grid">
-            <div class="sensor-item"><input type="checkbox" id="hub" onchange="showQty('hubQty',this)"><label for="hub">스마트 허브 (Smart Hub)</label><select class="sensor-qty" id="hubQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            <div class="sensor-item"><input type="checkbox" id="largeMotor" onchange="showQty('largeMotorQty',this)"><label for="largeMotor">라지 모터 (Large Motor)</label><select class="sensor-qty" id="largeMotorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            <div class="sensor-item"><input type="checkbox" id="mediumMotor" onchange="showQty('mediumMotorQty',this)"><label for="mediumMotor">미디엄 모터 (Medium Motor)</label><select class="sensor-qty" id="mediumMotorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            <div class="sensor-item"><input type="checkbox" id="distanceSensor" onchange="showQty('distanceSensorQty',this)"><label for="distanceSensor">거리 센서 (Distance Sensor)</label><select class="sensor-qty" id="distanceSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            <div class="sensor-item"><input type="checkbox" id="colorSensor" onchange="showQty('colorSensorQty',this)"><label for="colorSensor">컬러 센서 (Color Sensor)</label><select class="sensor-qty" id="colorSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            <div class="sensor-item"><input type="checkbox" id="forceSensor" onchange="showQty('forceSensorQty',this)"><label for="forceSensor">힘 센서 (Force Sensor)</label><select class="sensor-qty" id="forceSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="hub" onchange="showQty('hubQty',this)"><label for="hub">스마트허브(Smart Hub)</label><select class="sensor-qty" id="hubQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="largeMotor" onchange="showQty('largeMotorQty',this)"><label for="largeMotor">라지모터(Large Motor)</label><select class="sensor-qty" id="largeMotorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="mediumMotor" onchange="showQty('mediumMotorQty',this)"><label for="mediumMotor">미디엄모터(Medium Motor)</label><select class="sensor-qty" id="mediumMotorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="distanceSensor" onchange="showQty('distanceSensorQty',this)"><label for="distanceSensor">거리센서(Distance Sensor)</label><select class="sensor-qty" id="distanceSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="colorSensor" onchange="showQty('colorSensorQty',this)"><label for="colorSensor">컬러센서(Color Sensor)</label><select class="sensor-qty" id="colorSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="forceSensor" onchange="showQty('forceSensorQty',this)"><label for="forceSensor">힘센서(Force Sensor)</label><select class="sensor-qty" id="forceSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="gyroSensor" onchange="showQty('gyroSensorQty',this)"><label for="gyroSensor">자이로센서(Gyro Sensor)</label><select class="sensor-qty" id="gyroSensorQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="sensor-item"><input type="checkbox" id="lightMatrix" onchange="showQty('lightMatrixQty',this)"><label for="lightMatrix">라이트매트릭스(Light Matrix)</label><select class="sensor-qty" id="lightMatrixQty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
           </div>
         </td>
       </tr>
     </table>
-    <div class="section-title"><span class="icon">🔍</span>Connect (연결)</div>
+    <!-- 이하 기존 코드 동일 (동작, 디자인 변경 없음) -->
+    <div class="section-title"><span class="icon">🔍</span>Connect (생각열기)</div>
     <div class="speech-row">
       <button type="button" onclick="openSpeechModal('connect')">🎤 음성 입력</button>
       <span class="speech-guide">문제 상황, 주제 선정 이유 등을 자세히</span>
     </div>
     <textarea id="connect" placeholder="예시: 학교에서 학생들이 자주 쓰레기를 버리지 않는 문제를 보고 ..."></textarea>
-
-    <div class="section-title"><span class="icon">⚙️</span>Construct (구성 및 제작)</div>
+    <div class="section-title"><span class="icon">⚙️</span>Construct (구성하기)</div>
     <div class="speech-row">
       <button type="button" onclick="openSpeechModal('construct')">🎤 음성 입력</button>
       <span class="speech-guide">설계, 제작, 프로그래밍, 센서 사용 등</span>
@@ -206,7 +310,6 @@
     </div>
     <div class="snapshot-info">최대 5장까지만 촬영/첨부 가능합니다.</div>
     <div class="snapshot-container" id="snapshotContainer"></div>
-    <!-- 카메라 모달 팝업 -->
     <div class="camera-modal" id="cameraModal">
       <div class="camera-modal-content">
         <button class="camera-modal-close" onclick="closeCameraModal()" title="닫기">&times;</button>
@@ -216,7 +319,6 @@
         </div>
       </div>
     </div>
-    <!-- 음성 인식 모달 -->
     <div class="speech-modal" id="speechModal">
       <div class="speech-modal-content">
         <button class="speech-modal-close" onclick="cancelSpeech()" title="취소">&times;</button>
@@ -226,14 +328,13 @@
         <button class="speech-cancel-btn" onclick="cancelSpeech()" type="button">음성입력 중지</button>
       </div>
     </div>
-    <div class="section-title"><span class="icon">💡</span>Contemplate (성찰)</div>
+    <div class="section-title"><span class="icon">💡</span>Contemplate (깨치기)</div>
     <div class="speech-row">
       <button type="button" onclick="openSpeechModal('contemplate')">🎤 음성 입력</button>
       <span class="speech-guide">느낀 점, 어려웠던 점, 개선하고 싶은 점</span>
     </div>
     <textarea id="contemplate" placeholder="예시: 쓰레기통이 자동으로 뚜껑이 열려서 편리했고 ..."></textarea>
-
-    <div class="section-title"><span class="icon">🚀</span>Continue (확장)</div>
+    <div class="section-title"><span class="icon">🚀</span>Continue (이어가기)</div>
     <div class="speech-row">
       <button type="button" onclick="openSpeechModal('continue')">🎤 음성 입력</button>
       <span class="speech-guide">다음 발전 방향, 추가 탐구 주제</span>
@@ -246,10 +347,9 @@
       문의: <b>cnlegolab@gmail.com</b>
     </div>
   </div>
-  <!-- 카메라/음성인식 JS 및 저장 기능 -->
+  <!-- 이하 스크립트 변경 없음 -->
   <script>
     function showQty(qtyId, cb){ document.getElementById(qtyId).style.display = cb.checked ? 'inline-block' : 'none'; }
-    // 사진촬영/첨부 관련
     let maxSnapshots = 5, snapshotData = [], cameraStream = null;
     function openCameraModal() {
       if(snapshotData.length >= maxSnapshots) { alert("최대 5장까지만 저장할 수 있습니다."); return; }
@@ -304,7 +404,6 @@
         const img = document.createElement('img'); img.src = d; container.appendChild(img);
       });
     }
-    // 음성인식
     let speechRecognition, speechTarget, speechModalOpen = false;
     function openSpeechModal(targetId) {
       const modal = document.getElementById('speechModal');
@@ -331,7 +430,6 @@
       if (speechRecognition) speechRecognition.stop(); speechModalOpen = false;
     }
     function cancelSpeech() { closeSpeechModal(); }
-    // 보고서 저장
     function generateReport() {
       const author = document.getElementById('author').value.trim();
       const title = document.getElementById('title').value.trim();
@@ -345,7 +443,9 @@
         ['mediumMotor', 'mediumMotorQty', '미디엄 모터 (Medium Motor)'],
         ['distanceSensor', 'distanceSensorQty', '거리 센서 (Distance Sensor)'],
         ['colorSensor', 'colorSensorQty', '컬러 센서 (Color Sensor)'],
-        ['forceSensor', 'forceSensorQty', '힘 센서 (Force Sensor)']
+        ['forceSensor', 'forceSensorQty', '힘 센서 (Force Sensor)'],
+        ['gyroSensor', 'gyroSensorQty', '자이로 센서 (Gyro Sensor)'],
+        ['lightMatrix', 'lightMatrixQty', '라이트 매트릭스 (Light Matrix)']
       ].forEach(([id, qtyId, label]) => {
         if (document.getElementById(id).checked) {
           const q = document.getElementById(qtyId).value;
@@ -365,8 +465,7 @@
       }
       let reportHTML = `
       <div class="logo-wrap" style="margin-bottom:32px;justify-content:center;display:flex;align-items:flex-start;">
-        <img src="steam.png" alt="STEAM 센터 로고" class="logo-steam" style="max-width:150px;margin-right:18px;">
-        <img src="lego.png" alt="LEGO Education" class="logo-lego" style="max-width:110px;height:30px;margin-top:14px;">
+        <!-- 로고 삭제: <img src="steam.png" ...> <img src="lego.png" ...> -->
       </div>
       <h1>STEAM 영재교육센터<br>레고에듀케이션 연구활동 보고서</h1>
       <table class='meta-table'>
@@ -376,14 +475,14 @@
         <tr><th>작성일</th><td>${writeDate}</td></tr>
         <tr><th>사용 센서</th><td>${sensors.length ? sensors.join(', ') : '없음'}</td></tr>
       </table>
-      <div class='section-title'><span class="icon">🔍</span>Connect (연결)</div>
+      <div class='section-title'><span class="icon">🔍</span>Connect (생각열기)</div>
       <div class='desc-box'>${connect.replace(/\n/g, '<br>')}</div>
-      <div class='section-title'><span class="icon">⚙️</span>Construct (구성 및 제작)</div>
+      <div class='section-title'><span class="icon">⚙️</span>Construct (구성하기)</div>
       <div class='desc-box'>${construct.replace(/\n/g, '<br>')}</div>
       ${imagesHTML}
-      <div class='section-title'><span class="icon">💡</span>Contemplate (성찰)</div>
+      <div class='section-title'><span class="icon">💡</span>Contemplate (깨치기)</div>
       <div class='desc-box'>${contemplate.replace(/\n/g, '<br>')}</div>
-      <div class='section-title'><span class="icon">🚀</span>Continue (확장)</div>
+      <div class='section-title'><span class="icon">🚀</span>Continue (이어가기)</div>
       <div class='desc-box'>${continueTxt.replace(/\n/g, '<br>')}</div>
       <div class="copyright-footer" style="margin-top:52px;">
         이 프로그램의 제작자는 <b>STEAM 영재교육센터</b>입니다.<br>
@@ -404,7 +503,6 @@
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      // document.getElementById('editForm').style.display = 'none'; // <-- 요 한 줄만 주석 처리!
     }
   </script>
 </body>
